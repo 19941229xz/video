@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<!--<link href="//vjs.zencdn.net/4.10/video-js.css" rel="stylesheet">
+		<script src="//vjs.zencdn.net/4.10/video.js"></script>-->
+		<!--<link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">-->
+		<!-- If you'd like to support IE8 -->
+		<!--<script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+		<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>-->
+
+		<script src="https://cdn.bootcss.com/mui/3.7.1/js/mui.min.js"></script>
+		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet"></link>
+		<!--<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>-->
+		<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+
+		<style>
+			#instructions {
+				max-width: 640px;
+				text-align: left;
+				margin: 30px auto;
+			}
+			
+			#instructions textarea {
+				width: 100%;
+				height: 100px;
+			}
+			/* Show the controls (hidden at the start by default) */
+			
+			.video-js .vjs-control-bar {
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: -ms-flexbox;
+				display: flex;
+			}
+			/* Make the demo a little prettier */
+			/*body {
+				margin-top: 20px;
+				background: #222;
+				text-align: center;
+				color: #aaa;
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+				background: radial-gradient(#333, hsl(200, 30%, 6%));
+			}*/
+			
+			a,
+			a:hover,
+			a:visited {
+				color: #76DAFF;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div id="app">
+			<!--
+              	作者：offline
+              	时间：2018-01-11
+              	描述：autoplay="autoplay"
+              -->
+			<video  id="phoneVideo" class="video-js vjs-default-skin" controls preload="auto" width="375px" height="264px" poster="" >
+				<source id="src" src="" type='video/mp4' />
+			</video>
+
+			<!--<video id="phoneVideo" controls="controls" autoplay="autoplay">
+				<source id="src" src="http://127.0.0.1:8020/video/video/test2.mp4" type="video/mp4"> Your browser does not support HTML5 video.
+			</video>-->
+
+			<script type="text/javascript">
+				//js  修改视频源  
+				//mui("#myvideo")[0].src = 'http://127.0.0.1:8020/video/video/test.mp4' + '?' + Math.random();
+				//js 修改视频窗口的宽高
+				//mui("#myvideo")[0].width=900;
+				//var myPlayer = videojs('myvideo');
+
+				//获取当前播放时间  
+				//alert(player.width())
+				//alert(player.height())
+				//console.log(myPlayer)
+				//player.play();
+				//player.currentTime(150);
+				//			var t;
+				//			t = setTimeout(function() {
+				//				alert(player.bufferedPercent())
+				//			}, 1000);
+				//			myPlayer.on("ended", function() {
+				//				console.log("end", this.currentTime());
+				//			});
+			</script>
+
+			<div v-show="pcVideo" id="instructions">
+
+				<video id="pcVideo" class="video-js vjs-default-skin" width="640px" height="267px" controls preload="none" poster='' data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
+					<source src="" type='video/mp4' />
+				</video>
+
+			</div>
+
+			<div class="mui-content">
+
+				<!--<li v-for="item in selectedEvents.slice(0, 3)" v-on:tap="toDetailPage(item)" class="mui-table-view-cell mui-media"><a
+					href="javascript:;"> <img
+						class="mui-media-object mui-pull-left"
+						src="http://placehold.it/40x30"></img>
+						<div class="mui-media-body">
+							<p class="mui-ellipsis">{{item.date}} 交易单号:{{item.TransID}}</p>
+							<p class="mui-ellipsis">收银员ID:{{item.CashierID}} 款台:{{item.RegID}} 审查结果:{{item.result}}</p>
+						</div>
+				</a></li>-->
+
+				<ul v-show="videoListPage" class="mui-table-view">
+					<li v-for="item in videoList" v-on:tap="playVideo(item)" class="mui-table-view-cell mui-media">
+						<a href="javascript:;">
+							<img class="mui-media-object mui-pull-left" :src="item.poster">
+							<div class="mui-media-body">
+								{{item.title}}
+								<p class="mui-ellipsis">{{item.describe}}</p>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+	</body>
+
+	<script type="text/javascript">
+		
+		//alert(window.location.host)
+		var serverPath=window.location.host;
+		
+		var videoList = [{
+				"poster": "http://"+serverPath+"/video/pic/test.png",
+				"title": "test",
+				"describe": "烤炉模式的城，到黄昏",
+				"src": "http://"+serverPath+"/video/video/test.mp4"
+			},
+			{
+				"poster": "http://"+serverPath+"/video/pic/test2.jpg",
+				"title": "test2",
+				"describe": "如同打翻的调色盘一般",
+				"src": "http://"+serverPath+"/video/video/test2.mp4"
+			},
+			{
+				"poster": "http://"+serverPath+"/video/pic/test3.jpg",
+				"title": "test3",
+				"describe": "想要这样一间小木屋",
+				"src": "http://"+serverPath+"/video/video/test3.mp4"
+			},
+			{
+				"poster": "http://"+serverPath+"/video/pic/test4.png",
+				"title": "test4",
+				"describe": "可是，打呼噜怎么办",
+				"src": "http://"+serverPath+"/video/video/test4.mp4"
+			}
+		]
+
+		//var video = document.getElementById("phoneVideo");
+
+		function changeSource(value,value2) {
+			console.log('change source')
+			document.getElementById("src").src = value;
+			document.getElementById("phoneVideo").src=value;
+			document.getElementById("phoneVideo").poster=value2;
+			document.getElementById("phoneVideo").load();
+		}
+
+		var app = new Vue({
+			el: '#app',
+			data: {
+				phoneVideo: false,
+				pcVideo: false,
+				videoList: [],
+				videoListPage: true,
+			},
+			methods: {
+				playVideo: function(item) {
+					console.log('play video:' + item.title + '\n videoUrl:' + item.src);
+					//this.videoListPage=false;
+					//mui("#src")[0].src = item.src + '?' + Math.random();
+					//var player=videojs('phoneVideo');
+					//console.log(player)
+					//player.load(); 
+					//document.getElementById("phoneVideo").load();
+					//video.load();
+					//changeSource(item.src);
+					changeSource(item.src,item.poster);
+				},
+
+			},
+			mounted: function() {
+				console.log('vue load success');
+				this.videoList = videoList;
+//				var t;
+//				t=setTimeout(function(){
+//					changeSource("http://127.0.0.1:8020/video/video/test4.mp4");
+//				},2000)
+				//changeSource("http://127.0.0.1:8020/video/video/test4.mp4");
+				//changeSource("http://127.0.0.1:8020/video/video/test3.mp4");
+				//
+				//mui("#src")[0].src = "http://127.0.0.1:8020/video/video/test2.mp4"+ '?' + Math.random();
+			},
+
+		});
+	</script>
+
+</html>

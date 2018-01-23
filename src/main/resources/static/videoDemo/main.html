@@ -1,0 +1,1027 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>私人影院</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		
+		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet"></link>
+		<link href="https://cdn.bootcss.com/sweetalert/1.1.2/sweetalert.min.css" rel="stylesheet">
+
+		<script src="https://cdn.bootcss.com/sweetalert/1.1.2/sweetalert.min.js"></script>
+		<script src="https://cdn.bootcss.com/mui/3.7.1/js/mui.min.js"></script>
+		<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/iconfont.css">
+ 
+		<style type="text/css">
+			@font-face {
+				font-family: 'webfont';
+				src: url('//at.alicdn.com/t/webfont_wm5zxusfu8kqehfr.eot');
+				/* IE9*/
+				src: url('//at.alicdn.com/t/webfont_wm5zxusfu8kqehfr.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+				url('//at.alicdn.com/t/webfont_wm5zxusfu8kqehfr.woff') format('woff'), /* chrome、firefox */
+				url('//at.alicdn.com/t/webfont_wm5zxusfu8kqehfr.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+				url('//at.alicdn.com/t/webfont_wm5zxusfu8kqehfr.svg#NotoSansHans-Black') format('svg');
+				/* iOS 4.1- */
+			}
+			
+			input[type=password],
+			input[type=text] {
+				border: 1px solid rgba(0, 0, 0, 0);
+				margin-bottom: 0px;
+			}
+			
+			.web-font {
+				font-family: "webfont" !important;
+				font-size: 16px;
+				font-style: normal;
+				-webkit-font-smoothing: antialiased;
+				-webkit-text-stroke-width: 0.2px;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			
+			.mui-icon.small:before {
+				font-size: 19px;
+			}
+			
+			body {
+				font-family: "webfont" !important;
+				font-size: 16px;
+				font-style: normal;
+				-webkit-font-smoothing: antialiased;
+				-webkit-text-stroke-width: 0.2px;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			/*toast信息提示*/
+			
+			.mui-toast-container {
+				bottom: 50% !important;
+			}
+			
+			.mui-toast-message {
+				opacity: 0.6;
+				color: #fff;
+				width: 250px;
+				padding: 10px 5px 10px 5px;
+				font-size: 20px;
+			}
+			
+			.mui-popup-inner {
+				position: relative;
+				padding: 15px;
+				border-radius: 13px 13px 0 0;
+				background: #3b2e3b;
+				color: white;
+				/*opacity: 0.6;*/
+			}
+			
+			.mui-popup-button {
+				color: white;
+				background: #3b2e3b;
+				/*opacity: 0.6;*/
+			}
+			
+			.mui-popup-input input {
+				background: #988883;
+			}
+			
+			.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+				color: #A99595;
+			}
+			
+			.mui-table-view:before {
+				background-color: transparent;
+			}
+			
+			.mui-table-view-cell:after {
+				background-color: transparent;
+			}
+			
+			.mui-table-view:after {
+				background-color: transparent;
+			}
+			
+			.yuanjiao {
+				border-radius: 20px;
+			}
+			
+			.mui-bar {
+				background-color: rgba(0, 0, 0, .49);
+				;
+			}
+			
+			.mui-bar-nav {
+				box-shadow: 0 1px 6px transparent;
+			}
+			
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: #A99595;
+				border-bottom: 2px solid #A99595;
+				font-size: 20px;
+			}
+			
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+				font-size: 20px;
+			}
+			
+			.mui-table-view {
+				background-color: transparent;
+				font-size: 20px;
+			}
+			
+			.mui-bar-tab {
+				height: 70px;
+			}
+			
+			a,
+			p {
+				color: #A99595;
+			}
+			
+			.mui-bar-tab .mui-tab-item a span {
+				font-size: 80px;
+			}
+			
+			.mui-icon:before {
+				font-size: 35px;
+			}
+			
+			.mui-bar-tab .mui-tab-item.mui-active {
+				color: #de8e8e;
+			}
+			
+			.mui-bar-tab .mui-tab-item {
+				color: #A99595;
+			}
+			
+			.mui-table-view-cell.mui-active {
+				background: rgba(203, 187, 187, .22);
+			}
+			
+			.mui-control-content p {
+				color: #A99595;
+				font-size: 17px;
+			}
+			
+			.playBtnMask {
+				position: absolute;
+				z-index: 0;
+				left: 44%;
+				top: 30%;
+				width: 18%;
+				opacity: 0.9;
+			}
+			
+			.videoTime {
+				position: absolute;
+				border-radius: 20px;
+				background-color: #2c2c2c;
+				opacity: 0.89;
+				z-index: 999;
+				font-size: 14px;
+				line-height: 16px;
+				color: #c0d1eb;
+				bottom: 20%;
+				height: 17px;
+				width: 43px;
+				left: 71%;
+			}
+			
+			.mui-title {
+				color: #A99595;
+				font-size: 25px;
+			}
+			
+			.playBtnMaskLarge {
+				position: absolute;
+				z-index: 0;
+				left: 39%;
+				top: 35%;
+				opacity: 0.8;
+			}
+			
+			.videoTimeLarge {
+				position: absolute;
+				border-radius: 20px;
+				background-color: #2c2c2c;
+				opacity: 0.79;
+				z-index: 0;
+				font-size: 20px;
+				line-height: 26px;
+				color: #c0d1eb;
+				bottom: -28%;
+				height: 25px;
+				width: 72px;
+				right: 1%;
+				text-align: center;
+			}
+			
+			.mui-card {
+				font-size: 20px;
+				position: relative;
+				overflow: hidden;
+				margin: 10px;
+				border-radius: 2px;
+				background-color: transparent;
+				background-clip: padding-box;
+				border: 1px solid #190a0ab0;
+				color: black;
+				box-shadow: 0 29px 99px rgba(0, 0, 1, .3);
+				-webkit-box-shadow: 0 29px 99px rgba(0, 0, 1, .3);
+				-moz-box-shadow: 0 29px 99px rgba(0, 0, 1, .3);
+			}
+			
+			.mui-card-footer:before,
+			.mui-card-header:after {
+				background-color: inherit;
+			}
+			
+			.mui-icon-search:before {
+				line-height: 45px;
+			}
+			
+			input[type=search] {
+				height: 36px;
+				border-radius: 29px;
+				margin-top: 5px;
+				background-color: rgba(164, 145, 145, 0.54);
+			}
+			
+			.mui-table-view-cell.small {
+				font-size: 15px;
+			}
+			
+			.xuhao {
+				width: 10px;
+				height: 10px;
+				background-color: deeppink;
+				font-size: 15px;
+				color: white;
+				margin-right: 12px;
+			}
+			
+			.mui-table-view-cell>a:not(.mui-btn).mui-active {
+				background: rgba(203, 187, 187, .22);
+			}
+			
+			.mui-table-view .mui-media-object {
+				max-width: 28%;
+			}
+			
+			.user_edit {
+				display: block;
+			}
+			
+			.mui-card-header.mui-card-media {
+				padding: 0px;
+			}
+			
+			.setting ul li {
+				height: 45px;
+				color: rgba(254, 227, 218, 0.33);
+				background: #fee3da17;
+				border: 1px solid rgba(239, 239, 244, 0.09);
+			}
+			
+			.mui-switch.mui-dragging {
+				color: #6d5b6b;
+				border-color: #6d5a6c;
+				background-color: #0f121f;
+			}
+			
+			.mui-switch.mui-active {
+				border-color: #6d5a6c;
+				background-color: #0f121f;
+			}
+			
+			.mui-switch {
+				border: 2px solid #6e5c6d;
+				border-radius: 20px;
+				background-color: #0e111f;
+			}
+			
+			.mui-switch.mui-active:before {
+				color: #6d5b6b;
+			}
+			
+			.mui-switch .mui-switch-handle {
+				background-color: #6d5a6d;
+			}
+			
+			.mui-switch:before {
+				color: #6e5b6e;
+			}
+			
+			.setting {
+				margin-top: 10px;
+			}
+			
+			.sweet-alert {
+				background-color: rgba(35, 27, 33, 0.86);
+			}
+			/*button.confirm{
+				background-color: rgba(35, 27, 33, 0.86);
+			}*/
+		</style>
+
+	</head>
+
+	<body style="background-image: url(pic/backgorund.png);background-size:cover;color: #A99595;">
+		<div id="app">
+
+			<div v-show="main" style="">
+				<div id="slider" style="background-color: transparent;" class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="images/yuantiao.jpg">
+								<p class="mui-slider-title">静静看这世界</p>
+							</a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/shuijiao.jpg">
+								<p style="color: #A99595;" class="mui-slider-title">幸福就是可以一起睡觉</p>
+							</a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/muwu.jpg">
+								<p class="mui-slider-title">想要一间这样的木屋，静静的喝咖啡</p>
+							</a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/cbd.jpg">
+								<p class="mui-slider-title">Color of SIP CBD</p>
+							</a>
+						</div>
+						<div class="mui-slider-item">
+							<a href="#">
+								<img src="images/yuantiao.jpg">
+								<p class="mui-slider-title">静静看这世界</p>
+							</a>
+						</div>
+						<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="#">
+								<img src="images/shuijiao.jpg">
+								<p class="mui-slider-title">幸福就是可以一起睡觉</p>
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-indicator mui-text-right">
+						<div class="mui-indicator mui-active"></div>
+						<div class="mui-indicator"></div>
+						<div class="mui-indicator"></div>
+						<div class="mui-indicator"></div>
+					</div>
+				</div>
+
+				<div style="margin-top: 15px;">
+					<a style="background-color:transparent;color: #A99595;margin-left: 13px;">慢生活</a>
+					<a style="background-color:transparent;color: #A99595;float:right;margin-right: 13px;">更多>></a>
+					<ul class="mui-table-view mui-grid-view" style="background-color: transparent;">
+
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object yuanjiao" src="images/shuijiao.jpg">
+								<img class="playBtnMask" src="pic/playBtn2.png" />
+								<span class="videoTime">
+									10:10
+								</span>
+								</img>
+								<div class="mui-media-body">幸福就是可以一起睡觉</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object yuanjiao" src="images/muwu.jpg">
+								<div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#"><img class="mui-media-object yuanjiao" src="images/cbd.jpg">
+								<div class="mui-media-body">Color of SIP CBD</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object yuanjiao" src="images/yuantiao.jpg">
+								<div class="mui-media-body">静静看这世界</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div style="margin-top: 15px;margin-bottom: 60px;">
+					<a style="background-color:transparent;color: #A99595;margin-left: 13px;">慢生活</a>
+					<a style="background-color:transparent;color: #A99595;float:right;margin-right: 13px;">更多>></a>
+					<ul class="mui-table-view mui-grid-view" style="background-color: transparent;">
+
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img @tap="selectVideo" class="mui-media-object yuanjiao " src="images/shuijiao.jpg">
+								<img class="playBtnMask" src="pic/playBtn2.png" />
+								</img>
+								<div class="mui-media-body">幸福就是可以一起睡觉</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object yuanjiao" src="images/muwu.jpg">
+								<div class="mui-media-body">想要一间这样的木屋，静静的喝咖啡</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#"><img class="mui-media-object yuanjiao" src="images/cbd.jpg">
+								<div class="mui-media-body">Color of SIP CBD</div>
+							</a>
+						</li>
+						<li class="mui-table-view-cell mui-media mui-col-xs-6">
+							<a href="#">
+								<img class="mui-media-object yuanjiao" src="images/yuantiao.jpg">
+								<div class="mui-media-body">静静看这世界</div>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+			<div v-show="play">
+				<header style="background-color: transparent;" class="mui-bar mui-bar-nav">
+					<a @tap="back" style="color: #A99595;" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
+				</header>
+				<!--<div style="background-image: url(images/muwu.jpg);width: 100%;height: 300px;">
+					<center><img @tap="playVideo" src="pic/playBtn2.png" style="width: 20%;margin-top: 100px;" /></center>
+				</div>-->
+				<div class="playbox" style="width: 100%;height: 264px;position: relative;">
+					<video v-show="player" @tap="pause" id="phoneVideo" class="" style="margin-top: -26px;background-color: black;background:url() no-repeat center 30%;position: absolute;z-index: 3;top: 0px;margin: 0px auto;" webkit-playsinline playsinline preload="auto" load="loaded" width="100%" height="100%" poster="">
+						<source id="src" src="" type='video/mp4' />
+					</video>
+					<!-- background-image:url(images/cbd.jpg); -->
+					<div v-show="poster" id="videoPoster" class="mui-card" style="position: absolute;z-index: 3;top:0px;">
+						<div class="mui-card-header mui-card-media" style="height:205px;background-size: 300px 300px;">
+							<img src="images/cbd.jpg" style="width: 100%;height:264px;">
+							<img @tap="changeToVideo" class="playBtnMaskLarge" style="width: 15%;height: 24%;left:44%;top:57%;" src="pic/playBtn2.png" />
+							</img>
+							<span class="videoTimeLarge">
+									10:10
+								</span>
+							</img>
+						</div>
+					</div>
+					<div style="width: 100%;height: 260px;position:absolute;z-index:2;top=0px;text-align: center;background-color: black;">
+						<a style="margin:100px auto;display: block;font-size: 20px;">视频正在加载中...</a>
+					</div>
+				</div>
+				<div style="padding: 10px 10px;">
+					<div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+						<a class="mui-control-item" href="">介绍</a>
+						<a class="mui-control-item mui-active" href="">评论(8)</a>
+						<a class="mui-control-item" href="">收藏</a>
+						<!--<a class="mui-control-item" href="">历史</a>-->
+					</div>
+				</div>
+				<div>
+					<div id="" class="mui-control-content " style="background-color: transparent;padding: 0 4%;text-align: justify;height: 360px;overflow: auto;">
+						<!--<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-1
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-2
+							</li>
+							<li class="mui-table-view-cell">
+								第一个选项卡子项-3
+							</li>
+						</ul>-->
+						<p>播放次数:100
+							</>
+							<p>收藏人数:100</p>
+							<p>内容:</p>
+							直接加在html和css里面是没有任何变化的然而现实是，直接加在html和css里面是没有任何变化的然而现实是，直接加在html和css里面是没有任何变化的所以，我直接在js上给它加上了宽高，最后，终于出现了画面，只是有个小问题，播放暂停按钮不是我原来设置的样式，而是标签默认的，这应该比不能播放更能接受吧。
+					</div>
+					<div id="item2" class="mui-control-content " style="">
+						<ul class="mui-table-view" style="height: 360px;overflow: auto;">
+							<li class="mui-table-view-cell">
+								<a style="float: left;">游客:这部片子还可以...</a>
+								<a style="float: right;">三天前</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a style="float: left;">游客:这部片子还可以...</a>
+								<a style="float: right;">三天前</a>
+							</li>
+						</ul>
+					</div>
+					<div id="item3" class="mui-control-content mui-active" style="background-color: transparent;padding: 0 4%;text-align: justify;height: 360px;overflow: auto;">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								您的收藏列表:
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+							<li class="mui-table-view-cell">
+								精彩影片007之通天神探利希隆
+							</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+			<!-- play  end -->
+
+			<div v-show="more">
+				<header class="mui-bar mui-bar-nav" style="display: inherit;position: inherit;">
+					<h1 class="mui-title">电视剧专区</h1>
+				</header>
+
+				<div style="margin-bottom: 80px;">
+					<div class="mui-card">
+						<div class="mui-card-header mui-card-media" style="height:62vw;background-image:url(images/cbd.jpg)">
+							<img class="playBtnMaskLarge" style="width: 21%;height: 30%;" src="pic/playBtn2.png" />
+							</img>
+							<span class="videoTimeLarge">
+									10:10
+								</span>
+						</div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								<p>神探狄仁杰值通天嘀咕</p>
+							</div>
+						</div>
+						<div class="mui-card-footer">
+							<a class="mui-card-link">收藏</a>
+							<a class="mui-card-link">播放</a>
+						</div>
+					</div>
+
+					<div class="mui-card">
+						<div class="mui-card-header mui-card-media" style="height:62vw;background-image:url(images/cbd.jpg)">
+							<img class="playBtnMaskLarge" style="width: 21%;height: 30%;" src="pic/playBtn2.png" />
+							</img>
+							<span class="videoTimeLarge">
+									10:10
+								</span>
+						</div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								<p>神探狄仁杰值通天嘀咕</p>
+							</div>
+						</div>
+						<div class="mui-card-footer">
+							<a class="mui-card-link">收藏</a>
+							<a class="mui-card-link">播放</a>
+						</div>
+					</div>
+
+					<div class="mui-card">
+						<div class="mui-card-header mui-card-media" style="height:62vw;background-image:url(images/cbd.jpg)">
+							<img class="playBtnMaskLarge" style="width: 21%;height: 30%;" src="pic/playBtn2.png" />
+							</img>
+							<span class="videoTimeLarge">
+									10:10
+								</span>
+						</div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								<p>神探狄仁杰值通天嘀咕</p>
+							</div>
+						</div>
+						<div class="mui-card-footer">
+							<a class="mui-card-link">收藏</a>
+							<a class="mui-card-link">播放</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<div v-show="search">
+
+				<div class="mui-input-row mui-search">
+					<input type="search" class="mui-input-clear" placeholder="">
+				</div>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						搜索历史<span class="mui-icon small iconfont icon-trash" style="float: right;"></span>
+					</li>
+					<li class="mui-table-view-cell small">
+						<span class="mui-icon small iconfont icon-lishijilu" style="padding-right: 10px;"></span>精彩影片007之通天神探利希隆
+					</li>
+					<li class="mui-table-view-cell small">
+						<span class="mui-icon small iconfont icon-lishijilu" style="padding-right: 10px;"></span>精彩影片007之通天神探利希隆
+					</li>
+					<li class="mui-table-view-cell small">
+						<span class="mui-icon small iconfont icon-lishijilu" style="padding-right: 10px;"></span>精彩影片007之通天神探利希隆
+					</li>
+					<li class="mui-table-view-cell small">
+						<center>更多搜索历史<span class="mui-icon small iconfont icon-more"></span></center>
+					</li>
+				</ul>
+				<hr style="height:1px;border:none;border-top:1px solid rgba(184, 145, 146, 0.64);width: 90%;" />
+				<ul class="mui-table-view" style="width: 40%;float: left;">
+					<li class="mui-table-view-cell">
+						热门搜索
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									1
+								</span>海贼王</a>
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									2
+								</span>海贼王</a>
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									3
+								</span>海贼王</a>
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									4
+								</span>海贼王</a>
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									5
+								</span>海贼王</a>
+					</li>
+				</ul>
+				<ul class="mui-table-view" style="width: 40%;float: right;">
+					<li class="mui-table-view-cell">
+						&nbsp;
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									6
+								</span>海贼王</a>
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									7
+								</span>海贼王</a>
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									8
+								</span>海贼王</a>
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									9
+								</span>海贼王</a>
+					</li>
+					<li class="mui-table-view-cell small">
+						<a><span class="xuhao">
+									10
+								</span>海贼王</a>
+					</li>
+				</ul>
+				<div style="height: 90px;clear: both;"></div>
+			</div>
+
+			<div v-show="user">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media">
+						<a href="javascript:;" style="background-color: rgba(89, 71, 95, 0.32);">
+							<img class="mui-media-object mui-pull-left" style="height: 100px;width: 100px;border-radius: 25px;" src="pic/test.png">
+							<div class="">
+								<input class="user_edit" style="width: 67%;height: 15px;border-radius: 10px;background-color: transparent;margin-top: 5%;" type="text" value="账号" />
+								<input class="user_edit" style="width: 67%;height: 15px;border-radius: 10px;background-color: transparent;text-overflow:ellipsis;" type="password" value="密码" />
+								<input class="user_edit" style="width: 67%;height: 15px;border-radius: 10px;background-color: transparent;text-overflow:ellipsis;" type="text" value="这个人很懒,什么签名都没留下..." />
+
+							</div>
+						</a>
+						<a href="javascript:;" style="background-color: rgba(89, 71, 95, 0.32);">
+							<ul class="mui-table-view">
+								<li class="mui-table-view-cell">
+									<span class="iconfont icon-yue"></span>积分余额
+								</li>
+								<li class="mui-table-view-cell" style="color: rgba(200, 162, 161, 0.74);font-size: 32px;font-weight: bold;">
+									<span class="iconfont icon-icon14" style="font-size: 39px;color: rgba(200, 162, 161, 0.74);"></span>800
+									<p style="float: right;color: dodgerblue;">充值</p>
+								</li>
+								<li class="mui-table-view-cell">
+									<span class="iconfont icon-59"></span>观影总时长
+								</li>
+								<li class="mui-table-view-cell">
+									1000分钟
+								</li>
+								<li class="mui-table-view-cell">
+									<span class="iconfont icon-dengji"></span>当前等级
+								</li>
+								<li class="mui-table-view-cell">
+									一级
+								</li>
+							</ul>
+						</a>
+						<a href="javascript:;" style="background-color: rgba(89, 71, 95, 0.32);">
+							<ul class="mui-table-view">
+								<li class="mui-table-view-cell">
+									我的收藏
+								</li>
+								<li class="mui-table-view-cell">
+									历史记录
+								</li>
+							</ul>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div v-show="setting" class="setting">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" style="color: #a88486;background-color: transparent;border: none;">
+						<span>播放设置</span>
+					</li>
+					<li class="mui-table-view-cell">
+						<span>静音模式</span>
+						<div class="mui-switch mui-active">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<span>默认全屏</span>
+						<div class="mui-switch">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+					<!--<li class="mui-table-view-cell">
+						<span></span>
+						<div class="mui-switch mui-switch-mini mui-active ">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>-->
+				</ul>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" style="color: #a88486;background-color: transparent;border: none;">
+						<span>账号设置</span>
+					</li>
+					<li class="mui-table-view-cell">
+						<span>静音模式</span>
+						<div class="mui-switch mui-active">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<span>默认全屏</span>
+						<div class="mui-switch">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell" style="color: #a88486;background-color: transparent;border: none;">
+						<span>播放设置</span>
+					</li>
+					<li @tap="tel" class="mui-table-view-cell">
+						<span>联系我们</span>
+						<span class="mui-icon mui-icon-phone mui-pull-right" style="line-height: 20px;"></span>
+			</div>
+			</li>
+			</ul>
+		</div>
+
+		<div class="mui-bar mui-bar-tab">
+			<a v-on:tap="toMain" class="mui-tab-item mui-active">
+				<span v-on:tap="toMain" class="mui-icon iconfont icon-home"></span>
+			</a>
+			<a v-on:tap="toSearch" class="mui-tab-item">
+				<span @tap="toSearch" class="mui-icon iconfont icon-search1187938easyiconnet"></span>
+			</a>
+			<a @tap="toPlay" class="mui-tab-item">
+				<span class="mui-icon iconfont icon-computer_icon"></span>
+			</a>
+			<a @tap="toUser" class="mui-tab-item">
+				<span class="mui-icon iconfont icon-user"></span>
+			</a>
+			<a @tap="toSetting" class="mui-tab-item">
+				<span class="mui-icon iconfont icon-set"></span>
+			</a>
+		</div>
+		</div>
+	</body>
+
+	<script>
+		var window = window;
+		var app = new Vue({
+			el: '#app',
+			data: {
+				main: true, //page
+				play: false,
+				more: false,
+				search: false,
+				user: false,
+				setting: false,
+
+				poster: true,
+				player: false,
+
+				isPaused: false,
+			},
+			methods: {
+				selectVideo: function() {
+					this.main = false;
+					this.play = true;
+					this.videoObj.src = "http://119.29.172.118:80/video/video/test2.mp4";
+					this.videoObj.poster = "pic/test.png";
+					//this.videoObj.play();
+				},
+				back: function() {
+					this.main = true;
+					this.play = false;
+					this.videoObj.paused = true;
+					this.videoObj.src = "";
+					this.videoObj.poster = "";
+				},
+				playVideo: function() {
+					//				console.log(document)
+					this.poster = false;
+					this.player = true;
+
+					//					console.log(player.paused);
+					this.isPaused = this.videoObj.paused;
+				},
+				tel: function() {
+					window.location.href = "tel:13774024285";
+				},
+				listenVideoPaused: function(video) {
+
+					//					if(video==true){
+					//						this.poster=true;
+					//						this.player=false;
+					//					}else{
+					//						this.poster=false;
+					//						this.player=true;
+					//					}
+					var that = this;
+					var dsq;
+					dsq = setInterval(function() {
+						//						console.log('i am dsq') 
+						if(typeof(this.videoObj) == 'undefined') {
+							this.videoObj = document.getElementById("phoneVideo");
+						}
+
+						if(this.videoObj.paused == true) {
+							//							console.log('paused')
+							this.poster = true;
+							this.player = false;
+						} else {
+							//							console.log('playing')
+							this.poster = false;
+							this.player = true;
+						}
+					}, 1000);
+
+				},
+				changeToVideo: function() {
+					this.poster = false;
+					this.player = true;
+					//					if(navigator.userAgent.indexOf("iphone")>0){
+					//					}else{
+					//					this.videoObj.src="video/test3.mp4";	
+					//					}
+
+					　　
+					if(/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端
+						this.videoObj.src = "http://119.29.172.118:80/video/video/test4.mp4";
+
+					} else {
+						this.videoObj.src = "video/test3.mp4";
+					}
+					//					this.videoObj.src="video/test3.mp4";
+					this.videoObj.play();
+				},
+				pause: function() {
+					var that = this.videoObj.paused;
+					var obj = this.videoObj;
+					//alert('paused：'+that)
+					if(that == true) {
+						//alert('play')
+						obj.play();
+					} else {
+						obj.pause();
+					}
+
+				},
+				toMain: function() {
+					this.user = false;
+					this.search = false;
+					this.setting = false;
+					this.play = false;
+					this.main = true;
+				},
+				toUser: function() {
+					this.user = true;
+					this.search = false;
+					this.setting = false;
+					this.play = false;
+					this.main = false;
+				},
+				toSearch: function() {
+					this.user = false;
+					this.search = true;
+					this.setting = false;
+					this.play = false;
+					this.main = false;
+				},
+				toSetting: function() {
+					this.user = false;
+					this.search = false;
+					this.setting = true;
+					this.play = false;
+					this.main = false;
+				},
+				toPlay: function() {
+					this.user = false;
+					this.search = false;
+					this.setting = false;
+					this.play = true;
+					this.main = false;
+				},
+				test: function() {
+					var that = this;
+					document.getElementById("phoneVideo").addEventListener("doubletap", function() {
+						//alert("进来了");
+						that.videoObj.webkitEnterFullscreen();
+
+						//For Firefox
+						that.videoObj.mozRequestFullScreen();
+					});
+
+					//					alert('dbclick')
+					//					var array = ["yes", "no"]
+					//				mui.prompt("input", "","title", array, function(e) {
+
+					//				})
+					//				mui.toast('test',{duration:600000,type:'div'})
+				},
+
+			},
+			mounted: function() {
+				console.log(navigator.userAgent)
+				//alert(navigator.userAgent)
+				var player = document.getElementById("phoneVideo");
+				this.videoObj = player;
+				this.listenVideoPaused();
+				this.test();
+
+				mui.init({
+					gestureConfig: {
+						tap: true, //默认为true
+						doubletap: true, //默认为false
+						longtap: true, //默认为false
+						swipe: false, //默认为true
+						drag: false, //默认为true
+						hold: false, //默认为false，不监听
+						release: false //默认为false，不监听
+					}
+				});
+
+				swal({
+					title: '私人影院',
+					text: "比快播更懂你的网站(未满十八岁请在家长的陪同下观看哟,嘿嘿嘿~(￣▽￣)~*)",
+					confirmButtonText: '嗯,我已成年',
+					confirmButtonColor: 'Green',
+				})
+			},
+			filters: {
+
+			},
+			watch: {
+				//					'videoObj.paused':'listenVideoPaused'
+			},
+			beforeCreate: function() {
+				console.group('beforeCreate 创建前状态===============》');
+			}
+		});
+	</script>
+
+</html>

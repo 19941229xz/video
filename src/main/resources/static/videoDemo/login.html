@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="https://cdn.bootcss.com/mui/3.7.1/js/mui.min.js"></script>
+		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet"></link>
+		<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+
+		<style type="text/css">
+			* {
+				border-width: 0px;
+			}
+			
+			a {
+				color: #A99595;
+			}
+			
+			.mui-input-group:before {
+				background-color: transparent;
+			}
+			
+			.mui-input-group:after {
+				background-color: transparent
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				background-color: transparent
+			}
+			
+			.mui-input-row label {
+				line-height: 25px;
+			}
+			
+			.mui-input-row label {
+				color: #A99595;
+			}
+			
+			.mui-input-row input {
+				height: 50px;
+				line-height: 25px;
+				color: #A99595;
+			}
+			
+			.mui-input-row {
+				margin-bottom: 17px;
+			}
+			/*toast信息提示*/
+			
+			.mui-toast-container {
+				bottom: 50% !important;
+			}
+			
+			.mui-toast-message {
+				opacity: 0.6;
+				color: #fff;
+				width: 250px;
+				padding: 10px 5px 10px 5px;
+				font-size: 20px;
+			}
+			
+			.mui-popup-inner {
+				position: relative;
+				padding: 15px;
+				border-radius: 13px 13px 0 0;
+				background: #3b2e3b;
+				color: white;
+				/*opacity: 0.6;*/
+			}
+			
+			.mui-popup-button {
+				color: white;
+				background: #3b2e3b;
+				/*opacity: 0.6;*/
+			}
+			
+			.mui-popup-input input {
+				background: #988883;
+			}
+		</style>
+
+	</head>
+
+	<body style="background-image: url(pic/backgorund.png);background-size:cover">
+		<div id="app" style="width: 80%;height: 450px;margin: 100px auto;opacity: 1;">
+
+			<center>
+				<p style="color: #b492928f;font-size: 30px;margin-top:30px;margin-bottom: 50px;">
+					{{header}}</hp>
+			</center>
+			<!--<label style="display:block">账号</label><input type="text" style="display:inline;background-color: transparent;border: 1px solid transparent;"/>-->
+			<form class="mui-input-group" style="background: transparent;">
+				<div v-show="account" class="mui-input-row" style="height: 50px;border-radius:40px;border: 1px solid #A99595;">
+					<label>{{label}}</label>
+					<input v-model="iptAccount" style="" type="text" placeholder="">
+				</div>
+				<div v-show="pwd" class="mui-input-row" style="margin-top: 4px;height: 50px;border-radius:40px;border: 1px solid #A99595;">
+					<label>{{label2}}</label>
+					<input v-model="iptPwd" style="border-radius:40px;" type="password" class="mui-input-clear" placeholder="">
+				</div>
+				<div v-show="repeat" class="mui-input-row" style="margin-top: 4px;height: 50px;border-radius:40px;border: 1px solid #A99595;">
+					<label>{{label3}}</label>
+					<input v-model="iptRepeat" style="border-radius:40px;" type="password" class="mui-input-clear" placeholder="">
+				</div>
+
+				<div v-show="btn" class="mui-button-row">
+					<button @tap="btnclk($event)" type="button" style="color: #e6dddd;background-color: #8895a3;border:1px solid #8895a3; border-radius:40px;opacity: 0.8;" class="mui-btn mui-btn-primary mui-btn-block" onclick="return false;">
+						{{bValue}}<span class="mui-spinner"></span></button>&nbsp;&nbsp;
+
+				</div>
+				<div v-show="btn2" class="mui-button-row" style="margin-top: 25px;">
+					<button @tap="btn2clk($event)" type="button" style="color: #e6dddd;background-color: #8895a3;border:1px solid #8895a3; border-radius:40px;opacity: 0.8;" class="mui-btn mui-btn-primary mui-btn-block" onclick="return false;">
+						{{b2Value}}<span class="mui-spinner"></span></button>&nbsp;&nbsp;
+				</div>
+				<div v-show="foot" style="margin-top: 40px;color: #A99595;position: inherit;z-index: 999;">
+					<center>
+						<a @tap="forget">忘记密码</a>&nbsp;|
+						<a @tap="register">立即注册</a>
+					</center>
+				</div>
+			</form>
+		</div>
+
+		<script>
+			var window = window;
+			var app = new Vue({
+				el: '#app',
+				data: {
+					account: true,
+					pwd: true,
+					repeat: false,
+					btn: true,
+					btn2: true,
+					bValue: '登陆',
+					b2Value: '游客进入',
+					header: '私人影院',
+					foot: true,
+					label: '账号',
+					label2: '密码',
+					label3: '确认密码',
+					
+					iptAccount:'',//input 
+					iptPwd:'',
+					iptRepeat:'',
+					
+
+				},
+				methods: {
+					forget: function() {
+						console.log('gorget clk')
+						this.header = '找回密码';
+						this.label = 'QQ';
+						this.pwd = false;
+						this.repeat = false;
+						this.bValue = '确认';
+						this.b2Value = '返回登陆页';
+						this.foot = false;
+					},
+					register: function() {
+						this.header = '快速注册';
+						this.label = '账号';
+						this.pwd = true;
+						this.repeat = true;
+						this.bValue = '注册';
+						this.b2Value = '不了,直接登陆';
+						this.foot = false;
+					},
+					btnclk: function(event) {
+						console.log(event.target.textContent.replace(/^\s+|\s+$/gm, ''));
+						var str = event.target.textContent.replace(/^\s+|\s+$/gm, '');
+						var that = this;
+						switch(str) {
+							case "确认":
+								mui.alert('密码已经发送至您的邮箱,请注意查收', '系统提示', function() {
+									that.toLogin();
+								});
+								break;
+							case "注册":
+								mui.alert('快去登陆体验专属于你的私人影院吧!', '注册成功', function() {
+									that.toLogin();
+								});
+								break;
+							case "登陆":
+								var account=this.iptAccount;
+								var pwd=this.iptPwd
+								if(account !== null && account !== undefined && account !== ''&&pwd !== null && pwd !== undefined && pwd !== '') {
+									window.location.href='main.html';//将来  会带参  或者  在cookie中存值
+								}else{
+									var array=['继续登陆','去注册'];
+									var that=this;
+									mui.confirm('输入正确账号信息,如果没有账号可选择注册或游客进入!','登陆信息不能为空',array,function(e){
+										if(e.index==0){
+											
+										}else{
+											that.register();
+										}
+									});
+								}
+								break;
+						}
+					},
+					btn2clk: function() {
+						console.log(event.target.textContent.replace(/^\s+|\s+$/gm, ''));
+						var str = event.target.textContent.replace(/^\s+|\s+$/gm, '');
+						var that = this;
+						switch(str) {
+							case "返回登陆页":
+								that.toLogin();
+								break;
+							case "不了,直接登陆":
+								that.toLogin();
+								break;
+							case "游客进入":
+								window.location.href='main.html';
+								break;
+						}
+					},
+					toLogin: function() {
+						this.header = '私人影院';
+						this.label = '账号';
+						this.pwd = true;
+						this.repeat = false;
+						this.bValue = '登陆';
+						this.b2Value = '游客进入';
+						this.foot = true;
+					},
+				},
+				mounted: function() {
+					console.log('vue load success');
+					//this.forget();
+					mui.init({
+						gestureConfig: {
+							tap: true, //默认为true
+							doubletap: true, //默认为false
+							longtap: true, //默认为false
+							swipe: true, //默认为true
+							drag: true, //默认为true
+							hold: false, //默认为false，不监听
+							release: false //默认为false，不监听
+						}
+					});
+				},
+				beforeCreate: function() {
+
+				},
+				filters: {
+
+				},
+				watch: {
+
+				}
+			});
+		</script>
+
+	</body>
+
+</html>

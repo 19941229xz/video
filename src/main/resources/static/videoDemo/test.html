@@ -1,0 +1,37 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+
+<meta charset="UTF-8"></head>
+<body> 
+
+<button onclick="changeSource()" type="button">更改视频</button>
+<button onclick="hideVideo()" type="button">隐藏视频</button>
+<button onclick="showVideo()" type="button">显示视频</button>
+<br />
+<br />
+<video style="display: ;" id="video1" controls="controls" autoplay="autoplay">
+  <source id="mp4_src" src="http://127.0.0.1:8020/video/video/test.mp4" type="video/mp4">
+ 
+  Your browser does not support HTML5 video.
+</video>
+
+<script> 
+function changeSource()
+  { 
+  document.getElementById("mp4_src").src="http://127.0.0.1:8020/video/video/test.mp4";
+ document.getElementById("video1").style.display="none";
+ 
+  document.getElementById("video1").load();
+  } 
+  
+  function hideVideo(){
+  	document.getElementById("video1").style.display="none";
+  }
+  function showVideo(){
+  	document.getElementById("video1").style.display="";
+  }
+</script> 
+
+</body> 
+</html>
