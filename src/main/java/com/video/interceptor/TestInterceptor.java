@@ -13,8 +13,8 @@ public class TestInterceptor implements HandlerInterceptor {
 			throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("拦截器：请求之前！");
-		
-		return false;
+		System.out.println(handler.toString());
+		return true;
 	}
 
 	@Override

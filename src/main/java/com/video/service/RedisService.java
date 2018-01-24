@@ -16,6 +16,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RedisService {
+	
+	
+	public final String USERLIST="userList";
+	
+	
+	
     @Autowired
     private RedisTemplate redisTemplate;
     /**
