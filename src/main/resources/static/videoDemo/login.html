@@ -5,6 +5,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="Access-Control-Allow-Origin" content="*" />
 		<script src="https://cdn.bootcss.com/mui/3.7.1/js/mui.min.js"></script>
 		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet"></link>
 		<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
@@ -94,9 +95,9 @@
 			<form class="mui-input-group" style="background: transparent;">
 				<div v-show="account" class="mui-input-row" style="height: 50px;border-radius:40px;border: 1px solid #A99595;">
 					<label>{{label}}</label>
-					<input v-model="iptAccount" style="" type="text" placeholder="">
+					<input v-model="iptAccount"  @blur="accBlur($event)" style="" type="text" placeholder="">
 				</div>
-				<div v-show="pwd" class="mui-input-row" style="margin-top: 4px;height: 50px;border-radius:40px;border: 1px solid #A99595;">
+				<div v-show="pwd"  class="mui-input-row" style="margin-top: 4px;height: 50px;border-radius:40px;border: 1px solid #A99595;">
 					<label>{{label2}}</label>
 					<input v-model="iptPwd" style="border-radius:40px;" type="password" class="mui-input-clear" placeholder="">
 				</div>
@@ -106,13 +107,12 @@
 				</div>
 
 				<div v-show="btn" class="mui-button-row">
-					<button @tap="btnclk($event)" type="button" style="color: #e6dddd;background-color: #8895a3;border:1px solid #8895a3; border-radius:40px;opacity: 0.8;" class="mui-btn mui-btn-primary mui-btn-block" onclick="return false;">
-						{{bValue}}<span class="mui-spinner"></span></button>&nbsp;&nbsp;
-
+					<a @tap="btnclk($event)"  style="color: #e6dddd;background-color: #8895a3;border:1px solid #8895a3; border-radius:40px;opacity: 0.8;" class="mui-btn mui-btn-primary mui-btn-block" >
+						{{btnText}}<!--<span class="mui-spinner"></span>--></a>
 				</div>
 				<div v-show="btn2" class="mui-button-row" style="margin-top: 25px;">
-					<button @tap="btn2clk($event)" type="button" style="color: #e6dddd;background-color: #8895a3;border:1px solid #8895a3; border-radius:40px;opacity: 0.8;" class="mui-btn mui-btn-primary mui-btn-block" onclick="return false;">
-						{{b2Value}}<span class="mui-spinner"></span></button>&nbsp;&nbsp;
+					<a  @tap="btn2clk($event)"  style="color: #e6dddd;background-color: #8895a3;border:1px solid #8895a3; border-radius:40px;opacity: 0.8;" class="mui-btn mui-btn-primary mui-btn-block" >
+						{{btnText2}}<!--<span class="mui-spinner"></span>--></a>&nbsp;&nbsp;
 				</div>
 				<div v-show="foot" style="margin-top: 40px;color: #A99595;position: inherit;z-index: 999;">
 					<center>
@@ -128,13 +128,16 @@
 			var app = new Vue({
 				el: '#app',
 				data: {
+					serverPath:'http://localhost:8080',
+					qq:'',
+					
 					account: true,
 					pwd: true,
 					repeat: false,
 					btn: true,
 					btn2: true,
-					bValue: '登陆',
-					b2Value: '游客进入',
+					btnText: '登陆',
+					btnText2: '游客进入',
 					header: '私人影院',
 					foot: true,
 					label: '账号',
@@ -143,34 +146,106 @@
 					
 					iptAccount:'',//input 
 					iptPwd:'',
-					iptRepeat:'',
+					iptRepeat:'', 
+					
+					//registerAllow:true,//默认可以注册
+					
+					ajaxData:{
+						"qq":"",
+						"pwd":""
+					}
 					
 
 				},
 				methods: {
+					init:function(){
+						mui.init({
+							gestureConfig: {
+								tap: true, //默认为true
+								doubletap: true, //默认为false
+								longtap: true, //默认为false
+								swipe: true, //默认为true
+								drag: true, //默认为true
+								hold: false, //默认为false，不监听
+								release: false //默认为false，不监听
+							}
+						});
+						
+						this.iptAccount=this.qq;
+					},
+					accBlur :function(e){
+						
+						if(typeof(e)!='undefined'&&e.target.value.length>0){
+							this.ajaxData.qq=this.iptAccount;
+							var res=this.request('users','get');
+							//console.log(res)
+							if(res.userList.length==0){
+								if(this.btnText=='登陆'||this.btnText=='确认'){
+									mui.toast('该账户不存在');
+								}else{
+									this.registerAllow=true;
+								}
+							}else{
+								if(this.btnText=='登陆'||this.btnText=='确认'){
+									
+								}else{
+									if(this.iptPwd=''){
+										mui.toast('该账号已被注册');
+									}
+									//this.registerAllow=false;
+								}
+							}
+						}else{
+							/* this.ajaxData.qq=this.iptAccount;
+							var res=this.request('users','get');
+							//console.log(res)
+							if(res.userList.length==0){
+								if(this.btnText=='登陆'||this.btnText=='确认'){
+									mui.toast('该账户不存在');
+								}else{
+									this.registerAllow=true;
+								}
+							}else{
+								if(this.btnText=='登陆'||this.btnText=='确认'){
+									
+								}else{
+									mui.toast('该账号已被注册');
+									this.registerAllow=false;
+								}
+							} */
+						}
+						console.log('blur'+this.registerAllow)
+					},
 					forget: function() {
 						console.log('gorget clk')
 						this.header = '找回密码';
 						this.label = 'QQ';
+						this.btnText = '确认'; 
+						console.log(this.btnText)
+						this.btnText2 = '返回登陆页';
 						this.pwd = false;
 						this.repeat = false;
-						this.bValue = '确认';
-						this.b2Value = '返回登陆页';
 						this.foot = false;
 					},
 					register: function() {
+						this.iptAccount='';
+						this.iptPwd='';
+						this.iptRepeat='';
 						this.header = '快速注册';
 						this.label = '账号';
 						this.pwd = true;
 						this.repeat = true;
-						this.bValue = '注册';
-						this.b2Value = '不了,直接登陆';
+						this.btnText = '注册'; 
+						this.btnText2 = '不了,直接登陆';
 						this.foot = false;
 					},
 					btnclk: function(event) {
 						console.log(event.target.textContent.replace(/^\s+|\s+$/gm, ''));
 						var str = event.target.textContent.replace(/^\s+|\s+$/gm, '');
 						var that = this;
+						var account=this.iptAccount;
+						var pwd=this.iptPwd
+						var repeat=this.iptRepeat;
 						switch(str) {
 							case "确认":
 								mui.alert('密码已经发送至您的邮箱,请注意查收', '系统提示', function() {
@@ -178,18 +253,67 @@
 								});
 								break;
 							case "注册":
-								mui.alert('快去登陆体验专属于你的私人影院吧!', '注册成功', function() {
-									that.toLogin();
-								});
+								if(account !== null && account !== undefined &&
+										account !== ''&& pwd !== null && pwd !== undefined 
+										&& pwd !== ''&& repeat !== null && repeat !== undefined 
+										&& repeat !== ''){
+								}else{
+									mui.toast('注册信息不能为空')
+									return false;
+								}
+								
+								if(pwd!=repeat){
+									mui.toast('两次输入密码不一致')
+									this.iptRepeat='';
+									return false;
+								}
+								/* this.accBlur();
+								console.log(this.registerAllow) */
+								this.ajaxData.qq="";
+								this.ajaxData.pwd="";
+								this.ajaxData.qq=this.iptAccount;
+								this.ajaxData.pwd='';
+								var res=this.request('users','get');
+								var len=res.userList.length
+								if(len==0){
+									this.ajaxData.qq=account;
+									this.ajaxData.pwd=pwd;
+									var res=this.request('users/register','post');
+									if(res.status=='0'){
+										mui.alert('快去登陆体验专属于你的私人影院吧!', '注册成功', function() {
+											that.toLogin();
+										});
+									}else{
+										mui.alert('网络波动不稳定,请重试!', '系统提示', function() {
+										
+										});
+									}
+								}else{
+									mui.toast('该账号已被注册')
+								}
+								
+								
+								
+								
 								break;
 							case "登陆":
-								var account=this.iptAccount;
-								var pwd=this.iptPwd
-								if(account !== null && account !== undefined && account !== ''&&pwd !== null && pwd !== undefined && pwd !== '') {
+								if(account !== null && account !== undefined &&
+										account !== ''&&pwd !== null && pwd !== undefined 
+										&& pwd !== '') {
+									
+									this.ajaxData.qq=account;
+									this.ajaxData.pwd=pwd;
+									var res=this.request('users/login','post');
+									if(res.userList.length>0){
+										mui.toast('登陆成功,正在跳转...',10000)
 									window.location.href='main.html';//将来  会带参  或者  在cookie中存值
+									}else{
+										mui.toast('密码不正确')
+										this.iptPwd='';
+									}
+									
 								}else{
 									var array=['继续登陆','去注册'];
-									var that=this;
 									mui.confirm('输入正确账号信息,如果没有账号可选择注册或游客进入!','登陆信息不能为空',array,function(e){
 										if(e.index==0){
 											
@@ -222,25 +346,38 @@
 						this.label = '账号';
 						this.pwd = true;
 						this.repeat = false;
-						this.bValue = '登陆';
-						this.b2Value = '游客进入';
+						this.btnText = '登陆';
+						this.btnText2 = '游客进入';
 						this.foot = true;
 					},
+					request:function(url,type){//因为含有返回参数  所以此处必须为同步这样会损失速度
+						var that=this;
+						var res;
+						mui.ajax({
+							url:that.serverPath+'/'+url,
+							type:type,
+							data:that.ajaxData, 
+							/*headers:{
+								"Content-Type":"application/x-www-form-urlencoded"
+							},*/
+							timeout:10000,
+							async:false,
+							success:function(data){
+								res=data;
+								console.log(res);
+							},
+							error:function(type){
+								console.log('error-type:'+type);
+							}
+						});
+						return res;
+					}
 				},
 				mounted: function() {
 					console.log('vue load success');
 					//this.forget();
-					mui.init({
-						gestureConfig: {
-							tap: true, //默认为true
-							doubletap: true, //默认为false
-							longtap: true, //默认为false
-							swipe: true, //默认为true
-							drag: true, //默认为true
-							hold: false, //默认为false，不监听
-							release: false //默认为false，不监听
-						}
-					});
+					this.init();
+					//console.log(this.ajaxData.qq)
 				},
 				beforeCreate: function() {
 
@@ -249,9 +386,10 @@
 
 				},
 				watch: {
-
+ 
 				}
 			});
+			
 		</script>
 
 	</body>

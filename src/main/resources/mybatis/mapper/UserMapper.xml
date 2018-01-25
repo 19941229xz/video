@@ -12,8 +12,44 @@
 	
 	</select>
 	
+	<select id="one" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from users where qq=#{qq}
+		
+		<trim prefix="and ">
+			<if test="pwd !=null and pwd!='' ">
+				pwd=#{pwd}
+			</if>
+		</trim>
+		
+		<!-- somecondition --> <!-- limit -->
+	</select>
+	
+	<delete id="del" parameterType="java.util.Map">
+		delete  from users where qq=#{qq}  <!-- somecondition 条件删除--> 
+	</delete>
+	
 	<insert id="insert" parameterType="java.util.Map" >
-		insert into users values(#{qq},#{pwd},'','')
+		insert into users 
+		
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			qq,pwd,
+			<if test="tel !=null and tel!=''">
+			tel,
+			</if>
+			<if test="name !=null and name!='' ">
+			name,
+			</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{qq},#{pwd},
+			<if test="tel !=null and tel!='' ">
+			#{tel},
+			</if>
+			<if test="name !=null and name!=''">
+			#{name},
+			</if>
+		</trim>
+		
 	</insert>
 
 </mapper>

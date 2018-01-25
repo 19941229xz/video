@@ -6,20 +6,18 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
-import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 @Component
 public class EmailUtil {
 
-	public void sendTest() {
+	public static void sendTest() {
 		// 创建Properties 类用于记录邮箱的一些属性
 		Properties props = new Properties();
 		// 表示SMTP发送邮件，必须进行身份验证
@@ -69,8 +67,11 @@ public class EmailUtil {
 		}
 
 	}
-
-	public void sendOneNomal(Map<String,Object> params) {// 给一个人
+	/**
+	 * 
+	 * @param qq title content
+	 */
+	public static void sendOneNomal(Map<String,Object> params) {// 给一个人
 																		// 普通邮件
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -102,7 +103,7 @@ public class EmailUtil {
 		}
 	}
 
-	public void sendOneHtml(String qq, String title, String content) {// 给一个人
+	public static void sendOneHtml(String qq, String title, String content) {// 给一个人
 																		// html邮件
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -134,7 +135,7 @@ public class EmailUtil {
 		}
 	}
 
-	public void sendManyNormal(Map<String,Object> params) {// 群发普通邮件
+	public static void sendManyNormal(Map<String,Object> params) {// 群发普通邮件
 		String [] qqs=(String[])params.get("qqs");
 		
 		for (int i = 0; i < qqs.length; i++) {
@@ -175,7 +176,7 @@ public class EmailUtil {
 	 * 获取content模板的方法  制定参数为map  方便后面参数拓展
 	 */
 	//模板一
-	public String getModel1(Map<String,Object> params){
+	public static String getModel1(Map<String,Object> params){
 		String content="<div style='width:100%;height:1000px;background-image: url(http://119.29.172.118:80/videoDemo/pic/backgorund.png);background-size:cover;color: #A99595;margin:0px auto;'><center><h1 style='margin:100px auto;color:#A99595;font-size:50px;paddin-top:56%;'><a style='color:red' href='"+params.get("url")+"?qq='"+params.get("qq")+"'>点我</a>进入您的私人影院!</h1></center></div>";
 		return content;
 	}
@@ -185,7 +186,7 @@ public class EmailUtil {
 	 * @param img  text1  text2  url btn1  btn2
 	 * @return  content
 	 */
-	public String getModel2(Map<String,Object> params){
+	public static String getModel2(Map<String,Object> params){
 	
 		String content="<center><div style='clear:both'><img src='"+params.get("img")+"'></div><div>'"+params.get("text1")+"'</div><div>'"+params.get("text2")+"'</div><div style='text-align:center;'><div style='margin:10px auto;width:330px;height:26px'><div class='qqmail_postcard_reply_thanksbtn' style='border:1px solid #488825;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px; border-radius:3px;float:left;margin-left:4px;'><a class='qqmail_postcard_reply_thanksbtn' style='font-size:14px;width: 150px;border:2px solid #488825;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px; border-radius:1px;height:44px;line-height:44px; font-size:20px;cursor:pointer; background:#62A026; color:#FFF; font-weight:bold; border:1px solid #7CB04A;  padding:0 0 0px;display:block;text-decoration:none;' href='"+params.get("url")+"'>'"+params.get("btn1")+"' </a></div><div style='border:1px solid #488825;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px; border-radius:3px;float:left;margin-left:10px;'><a class='qqmail_postcard_reply2' style='font-size:14px;width: 150px;border:2px solid #488825;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px; border-radius:1px;height:44px;line-height:44px; font-size:20px;cursor:pointer; background:#62A026; color:#FFF; font-weight:bold; border:1px solid #7CB04A;  padding:0 0 0px;display:block;text-decoration:none;' href='"+params.get("url")+"' >'"+params.get("btn2")+"'</a></div><div class='clr'></div></div></div></div></center>";
 		

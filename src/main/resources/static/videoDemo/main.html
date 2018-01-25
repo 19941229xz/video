@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<title>私人影院</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		
+
 		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet"></link>
 		<link href="https://cdn.bootcss.com/sweetalert/1.1.2/sweetalert.min.css" rel="stylesheet">
 
@@ -13,9 +13,9 @@
 		<script src="https://cdn.bootcss.com/mui/3.7.1/js/mui.min.js"></script>
 		<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/iconfont.css">
- 
+
 		<style type="text/css">
-			@font-face {
+			@font-face { 
 				font-family: 'webfont';
 				src: url('//at.alicdn.com/t/webfont_wm5zxusfu8kqehfr.eot');
 				/* IE9*/
@@ -178,7 +178,7 @@
 				border-radius: 20px;
 				background-color: #2c2c2c;
 				opacity: 0.89;
-				z-index: 999;
+				z-index: 10;
 				font-size: 14px;
 				line-height: 16px;
 				color: #c0d1eb;
@@ -215,7 +215,7 @@
 				width: 72px;
 				right: 1%;
 				text-align: center;
-			}
+			} 
 			
 			.mui-card {
 				font-size: 20px;
@@ -320,9 +320,10 @@
 			.sweet-alert {
 				background-color: rgba(35, 27, 33, 0.86);
 			}
-			/*button.confirm{
-				background-color: rgba(35, 27, 33, 0.86);
-			}*/
+			
+			.sweet-alert button {
+				color: #999999a3;
+			}
 		</style>
 
 	</head>
@@ -479,14 +480,14 @@
 				</div>
 				<div style="padding: 10px 10px;">
 					<div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
-						<a class="mui-control-item" href="">介绍</a>
-						<a class="mui-control-item mui-active" href="">评论(8)</a>
-						<a class="mui-control-item" href="">收藏</a>
+						<a @tap="segment($event)" class="mui-control-item mui-active" >介绍</a>
+						<a @tap="segment($event)" class="mui-control-item " >评论</a>
+						<a @tap="segment($event)" class="mui-control-item" >收藏</a>
 						<!--<a class="mui-control-item" href="">历史</a>-->
 					</div>
 				</div>
-				<div>
-					<div id="" class="mui-control-content " style="background-color: transparent;padding: 0 4%;text-align: justify;height: 360px;overflow: auto;">
+				<div id="segItems">
+					<div id="item1" class="mui-control-content mui-active" style="background-color: transparent;padding: 0 4%;text-align: justify;height: 360px;overflow: auto;">
 						<!--<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
 								第一个选项卡子项-1
@@ -516,7 +517,7 @@
 							</li>
 						</ul>
 					</div>
-					<div id="item3" class="mui-control-content mui-active" style="background-color: transparent;padding: 0 4%;text-align: justify;height: 360px;overflow: auto;">
+					<div id="item3" class="mui-control-content " style="background-color: transparent;padding: 0 4%;text-align: justify;height: 360px;overflow: auto;">
 						<ul class="mui-table-view">
 							<li class="mui-table-view-cell">
 								您的收藏列表:
@@ -557,6 +558,7 @@
 
 			<div v-show="more">
 				<header class="mui-bar mui-bar-nav" style="display: inherit;position: inherit;">
+					<a @tap="back" style="color: #A99595;line-height: 23px;" class="mui-icon mui-icon-left-nav mui-pull-left"></a>
 					<h1 class="mui-title">电视剧专区</h1>
 				</header>
 
@@ -624,7 +626,7 @@
 			<div v-show="search">
 
 				<div class="mui-input-row mui-search">
-					<input type="search" class="mui-input-clear" placeholder="">
+					<input v-model="searchIpt" @blur="searchBlur($event)" @input="searchChange($event)" type="search" class="mui-input-clear" placeholder="">
 				</div>
 				<ul class="mui-table-view">
 					<li class="mui-table-view-cell">
@@ -646,7 +648,7 @@
 				<hr style="height:1px;border:none;border-top:1px solid rgba(184, 145, 146, 0.64);width: 90%;" />
 				<ul class="mui-table-view" style="width: 40%;float: left;">
 					<li class="mui-table-view-cell">
-						热门搜索
+						热门搜索   <!--<span style="color: red;">{{searchIpt}}---{{searchIpt.length}}</span>-->
 					</li>
 					<li class="mui-table-view-cell small">
 						<a><span class="xuhao">
@@ -713,9 +715,9 @@
 						<a href="javascript:;" style="background-color: rgba(89, 71, 95, 0.32);">
 							<img class="mui-media-object mui-pull-left" style="height: 100px;width: 100px;border-radius: 25px;" src="pic/test.png">
 							<div class="">
-								<input class="user_edit" style="width: 67%;height: 15px;border-radius: 10px;background-color: transparent;margin-top: 5%;" type="text" value="账号" />
-								<input class="user_edit" style="width: 67%;height: 15px;border-radius: 10px;background-color: transparent;text-overflow:ellipsis;" type="password" value="密码" />
-								<input class="user_edit" style="width: 67%;height: 15px;border-radius: 10px;background-color: transparent;text-overflow:ellipsis;" type="text" value="这个人很懒,什么签名都没留下..." />
+								<input class="user_edit" style="color:#a99595;width: 67%;height: 15px;border-radius: 10px;background-color: transparent;margin-top: 5%;" type="text" value="账号" />
+								<input class="user_edit" style="color:#a99595;width: 67%;height: 15px;border-radius: 10px;background-color: transparent;text-overflow:ellipsis;" type="password" value="密码" />
+								<input class="user_edit" style="color:#a99595;width: 67%;height: 15px;border-radius: 10px;background-color: transparent;text-overflow:ellipsis;" type="text" value="这个人很懒,什么签名都没留下..." />
 
 							</div>
 						</a>
@@ -724,9 +726,11 @@
 								<li class="mui-table-view-cell">
 									<span class="iconfont icon-yue"></span>积分余额
 								</li>
-								<li class="mui-table-view-cell" style="color: rgba(200, 162, 161, 0.74);font-size: 32px;font-weight: bold;">
+								<li @tap="charge($event)" class="mui-table-view-cell" style="color: rgba(200, 162, 161, 0.74);font-size: 32px;font-weight: bold;">
 									<span class="iconfont icon-icon14" style="font-size: 39px;color: rgba(200, 162, 161, 0.74);"></span>800
-									<p style="float: right;color: dodgerblue;">充值</p>
+									<!--<a href="mqqwpa://im/chat?chat_type=wpa&uin=2300819486&version=1&src_type=web&web_src=oicqzone.com" style="position: absolute;top:29px;right:0px;font-size:15px;color: dodgerblue;">充值</a>
+								--><p style="float: right;color: dodgerblue;">充值</p>
+								
 								</li>
 								<li class="mui-table-view-cell">
 									<span class="iconfont icon-59"></span>观影总时长
@@ -744,10 +748,10 @@
 						</a>
 						<a href="javascript:;" style="background-color: rgba(89, 71, 95, 0.32);">
 							<ul class="mui-table-view">
-								<li class="mui-table-view-cell">
+								<li @tap="collection($event)" class="mui-table-view-cell">
 									我的收藏
 								</li>
-								<li class="mui-table-view-cell">
+								<li @tap="playHistory($event)" class="mui-table-view-cell">
 									历史记录
 								</li>
 							</ul>
@@ -763,13 +767,13 @@
 					</li>
 					<li class="mui-table-view-cell">
 						<span>静音模式</span>
-						<div class="mui-switch mui-active">
+						<div @tap="switchClick($event)" class="mui-switch mui-active">
 							<div class="mui-switch-handle"></div>
 						</div>
 					</li>
 					<li class="mui-table-view-cell">
 						<span>默认全屏</span>
-						<div class="mui-switch">
+						<div @tap="switchClick($event)" class="mui-switch">
 							<div class="mui-switch-handle"></div>
 						</div>
 					</li>
@@ -786,13 +790,13 @@
 					</li>
 					<li class="mui-table-view-cell">
 						<span>静音模式</span>
-						<div class="mui-switch mui-active">
+						<div @tap="switchClick($event)" class="mui-switch mui-active">
 							<div class="mui-switch-handle"></div>
 						</div>
 					</li>
 					<li class="mui-table-view-cell">
 						<span>默认全屏</span>
-						<div class="mui-switch">
+						<div @tap="switchClick($event)" class="mui-switch">
 							<div class="mui-switch-handle"></div>
 						</div>
 					</li>
@@ -807,25 +811,24 @@
 			</div>
 			</li>
 			</ul>
-		</div>
 
-		<div class="mui-bar mui-bar-tab">
-			<a v-on:tap="toMain" class="mui-tab-item mui-active">
-				<span v-on:tap="toMain" class="mui-icon iconfont icon-home"></span>
-			</a>
-			<a v-on:tap="toSearch" class="mui-tab-item">
-				<span @tap="toSearch" class="mui-icon iconfont icon-search1187938easyiconnet"></span>
-			</a>
-			<a @tap="toPlay" class="mui-tab-item">
-				<span class="mui-icon iconfont icon-computer_icon"></span>
-			</a>
-			<a @tap="toUser" class="mui-tab-item">
-				<span class="mui-icon iconfont icon-user"></span>
-			</a>
-			<a @tap="toSetting" class="mui-tab-item">
-				<span class="mui-icon iconfont icon-set"></span>
-			</a>
-		</div>
+			<div  class="mui-bar mui-bar-tab">
+				<a @tap.stop="toMain($event)" class="mui-tab-item mui-active">
+					<span class="mui-icon iconfont icon-home"></span>
+				</a>
+				<a @tap.stop="toSearch($event)" class="mui-tab-item">
+					<span class="mui-icon iconfont icon-search1187938easyiconnet"></span>
+				</a>
+				<a @tap.stop="toPlay($event)" class="mui-tab-item"> 
+					<span class="mui-icon iconfont icon-computer_icon"></span>
+				</a>
+				<a @tap.stop="toUser($event)" class="mui-tab-item">
+					<span class="mui-icon iconfont icon-user"></span>
+				</a>
+				<a @tap.stop="toSetting($event)" class="mui-tab-item">
+					<span class="mui-icon iconfont icon-set"></span>
+				</a>
+			</div>
 		</div>
 	</body>
 
@@ -845,6 +848,8 @@
 				player: false,
 
 				isPaused: false,
+				
+				searchIpt:'',//数据
 			},
 			methods: {
 				selectVideo: function() {
@@ -911,8 +916,8 @@
 
 					　　
 					if(/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) { //移动端
-						this.videoObj.src = "http://119.29.172.118:80/video/video/test4.mp4";
-
+						//this.videoObj.src = "http://119.29.172.118:80/video/video/test4.mp4";
+						this.videoObj.src = "video/test3.mp4";
 					} else {
 						this.videoObj.src = "video/test3.mp4";
 					}
@@ -931,40 +936,208 @@
 					}
 
 				},
-				toMain: function() {
+				toMain: function(e) {
+					this.nav(e);
 					this.user = false;
 					this.search = false;
 					this.setting = false;
 					this.play = false;
+					this.more=false;
+					
 					this.main = true;
+//					e.target.parentNode.className='mui-tab-item mui-active'; 
 				},
-				toUser: function() {
+				toUser: function(e) {
+					this.nav(e);
+					this.more=false;
+					this.search = false;
+					this.setting = false;
+					this.play = false;
+					this.main = false;
+					
 					this.user = true;
-					this.search = false;
+//					e.target.parentNode.className='mui-tab-item mui-active'; 
+				},
+				toSearch: function(e) {
+					this.nav(e);
+					this.user = false;
+					this.more=false;
 					this.setting = false;
 					this.play = false;
 					this.main = false;
-				},
-				toSearch: function() {
-					this.user = false;
+					
 					this.search = true;
-					this.setting = false;
-					this.play = false;
-					this.main = false;
+//					e.target.parentNode.className='mui-tab-item mui-active'; 
 				},
-				toSetting: function() {
+				toSetting: function(e) {
+					this.nav(e);
 					this.user = false;
 					this.search = false;
+					this.more=false;
+					this.play = false;
+					this.main = false;
+					
 					this.setting = true;
-					this.play = false;
-					this.main = false;
+//					e.target.parentNode.className='mui-tab-item mui-active'; 
 				},
-				toPlay: function() {
+				toPlay: function(e) {
+					
+					this.nav(e);
 					this.user = false;
 					this.search = false;
 					this.setting = false;
-					this.play = true;
+					this.more = false;
 					this.main = false;
+					
+					this.play=true;
+//					e.target.parentNode.className='mui-tab-item mui-active'; 
+					
+					//以后做成可以从后台动态获取内容并提示  ajax
+					var t;
+					t-setTimeout(function(){
+						swal({
+						title: '播放小贴士',
+						text: "点击暂停/播放 双击全屏播放",
+						confirmButtonText: '晓得了',
+						confirmButtonColor: 'rgba(153, 153, 153, 0.63)',
+					})
+					},1000);
+					
+
+				},
+				segment:function(e){
+					console.log(e.target.innerText); 
+					var text=e.target.innerText;
+					var active=e.target;
+					var arr=active.parentNode.children;
+					var items=document.getElementById("segItems").children;
+					console.log(arr)
+//					for(var i=0;i<arr.length;i++){
+//						arr[i].className='mui-control-item';
+//						items[i].className='mui-control-content';
+//					}
+					this.clearClass(arr,'mui-control-item');
+					this.clearClass(items,'mui-control-content'); 
+					
+					active.className='mui-control-item mui-active';
+					
+					
+					switch(text.replace(/^\s+|\s+$/gm, '')){
+						case '介绍':
+							items[0].className='mui-control-content mui-active';
+						break;
+						case '评论':
+							items[1].className='mui-control-content mui-active';
+						break;
+						case '收藏':
+							items[2].className='mui-control-content mui-active';
+						break;
+						
+					}
+				},
+				nav:function(e){
+					console.log(e.target.className);
+//					var className=e.target.parentNode.className;
+//					if(className=='mui-bar mui-bar-tab'){
+//						return;
+//					}
+					if(e.target.className.indexOf('mui-tab-item')>-1){//a  click
+						var items=e.target.parentNode.children;
+					this.clearClass(items,'mui-tab-item');
+					e.target.className='mui-tab-item mui-active';
+					}else if(e.target.className.indexOf('mui-icon')>-1){
+						var items=e.target.parentNode.parentNode.children;
+					this.clearClass(items,'mui-tab-item');
+					e.target.parentNode.className='mui-tab-item mui-active';
+					}else if(e.target.className.indexOf('mui-bar')>-1){
+//						var items=e.target.children;
+//					this.clearClass(items,'mui-tab-item');
+//					e.target.parentNode.className='mui-tab-item mui-active';
+					}
+//					if(this.main){
+//						items[].className='mui-tab-item mui-active';
+//					}
+					
+					
+//					e.target.parentNode.className='mui-tab-item mui-active';
+					
+				},
+				searchBlur:function(e){
+					this.searchIpt='';
+					this.searchChange(e);
+				},
+				searchChange:function(e){
+					//css  处理
+					console.log(e.target.parentNode.nextElementSibling.children[0].style.display);
+					
+					var len=e.target.parentNode.nextElementSibling.children.length;
+					var firstLi=e.target.parentNode.nextElementSibling.children[0];
+					var lastLi=e.target.parentNode.nextElementSibling.children[len-1];
+					
+					//判断 searchIpt
+						if(this.searchIpt.length==0){
+							firstLi.style.display='';
+							lastLi.style.display='';
+							
+							for(var i=1;i<len-1;i++){
+							e.target.parentNode.nextElementSibling.children[i].firstChild.className='mui-icon small iconfont icon-lishijilu';
+							}
+						}else{
+							firstLi.style.display='none';
+							lastLi.style.display='none';
+							//console.log(e.target.parentNode.nextElementSibling.children[2].firstChild)  iconfont icon-search1187938easyiconnet
+							for(var i=1;i<len-1;i++){ 
+								e.target.parentNode.nextElementSibling.children[i].firstChild.className='mui-icon small iconfont icon-search1187938easyiconnet';
+							}
+						}
+					
+				},
+				clearClass:function(arr,value){
+					for(var i=0;i<arr.length;i++){
+						arr[i].className=value;
+					}
+				},
+				charge:function(e){
+					//alert(window.navigator.userAgent.toLowerCase())
+					//判断是否是微信
+					if(window.navigator.userAgent.toLowerCase().match(/MicroMessenger/i) == 'micromessenger'){
+						
+						//alert('weixin')
+						
+						return;
+					}
+					window.location.href='mqqwpa://im/chat?chat_type=wpa&uin=2300819486&version=1&src_type=web&web_src=oicqzone.com'+'&'+Math.random();
+					//window.location.href='tencent://Message/?Uin=2300819486&websiteName=www.qq.com&Menu=yes';
+					//window.location.href='tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=910521727&fuin=938065079&website=www.qq.com';
+					//window.location.href='mqqapi://card/show_pslcard?src_type=internal&version=1&uin=569512911&card_type=group&source=qrcode';
+					//window.location.href='tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=2573806409';
+				},
+				collection:function(e){
+					this.user = false;
+					this.search = false;
+					this.setting = false;
+					this.play = false;
+					this.main = false;
+					
+					this.more=true;
+
+				},
+				playHistory:function(e){
+					this.user = false;
+					this.search = false;
+					this.setting = false;
+					this.play = false;
+					this.main = false;
+					
+					this.more=true;
+				},
+				switchClick:function(e){
+					console.log(e.target);
+					if(e.target.className.indexOf('mui-active')>-1){
+						mui.toast('开启')
+					}else{
+						mui.toast('关闭')
+					}
 				},
 				test: function() {
 					var that = this;
@@ -992,7 +1165,7 @@
 				this.videoObj = player;
 				this.listenVideoPaused();
 				this.test();
-
+				
 				mui.init({
 					gestureConfig: {
 						tap: true, //默认为true
@@ -1005,12 +1178,12 @@
 					}
 				});
 
-				swal({
-					title: '私人影院',
-					text: "比快播更懂你的网站(未满十八岁请在家长的陪同下观看哟,嘿嘿嘿~(￣▽￣)~*)",
-					confirmButtonText: '嗯,我已成年',
-					confirmButtonColor: 'Green',
-				})
+//				swal({
+//					title: '私人影院',
+//					text: "比快播更懂你的网站(未满十八岁请在家长的陪同下观看哟,嘿嘿嘿~(￣▽￣)~*)",
+//					confirmButtonText: '嗯,我已成年',
+//					confirmButtonColor: '#40313ddb',
+//				});
 			},
 			filters: {
 

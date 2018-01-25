@@ -20,8 +20,6 @@ public class VideoApplicationTests {
 	@Autowired
 	RedisService redisService;
 	
-	@Autowired
-	EmailUtil et;
 
 	@Test
 	public void contextLoads() {
@@ -49,9 +47,9 @@ public class VideoApplicationTests {
 		map.put("btn2", "新司机入口");
 		
 		
-		map.put("content", et.getModel2(map));
+		map.put("content", EmailUtil.getModel2(map));
 		
-		et.sendOneNomal(map);
+		EmailUtil.sendOneNomal(map);
 		
 	}
 	
