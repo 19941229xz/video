@@ -196,23 +196,7 @@
 								}
 							}
 						}else{
-							/* this.ajaxData.qq=this.iptAccount;
-							var res=this.request('users','get');
-							//console.log(res)
-							if(res.userList.length==0){
-								if(this.btnText=='登陆'||this.btnText=='确认'){
-									mui.toast('该账户不存在');
-								}else{
-									this.registerAllow=true;
-								}
-							}else{
-								if(this.btnText=='登陆'||this.btnText=='确认'){
-									
-								}else{
-									mui.toast('该账号已被注册');
-									this.registerAllow=false;
-								}
-							} */
+
 						}
 						console.log('blur'+this.registerAllow)
 					},
@@ -248,9 +232,26 @@
 						var repeat=this.iptRepeat;
 						switch(str) {
 							case "确认":
-								mui.alert('密码已经发送至您的邮箱,请注意查收', '系统提示', function() {
-									that.toLogin();
-								});
+								if(account==''){
+									mui.toast('账号不能为空')
+									return;
+								}
+								this.ajaxData.qq='';
+								this.ajaxData.pwd='';
+								this.ajaxData.qq=this.iptAccount;
+								var res=this.request('users','get');
+								if(res.userList.length==0){
+									mui.toast('该账号不存在')
+								}else{
+									var res=this.request('users/forget','post');
+									if(res.status=='0'){
+										mui.alert('密码已经发送至您的邮箱,请注意查收', '系统提示', function() {
+											that.toLogin();
+										});
+									}
+								}
+								
+								
 								break;
 							case "注册":
 								if(account !== null && account !== undefined &&
@@ -276,11 +277,13 @@
 								var res=this.request('users','get');
 								var len=res.userList.length
 								if(len==0){
+									event.target.style.disabled='disabled';
 									this.ajaxData.qq=account;
 									this.ajaxData.pwd=pwd;
 									var res=this.request('users/register','post');
 									if(res.status=='0'){
 										mui.alert('快去登陆体验专属于你的私人影院吧!', '注册成功', function() {
+											event.target.style.disabled='';
 											that.toLogin();
 										});
 									}else{

@@ -102,7 +102,13 @@ public class EmailUtil {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * 
+	 * @param qq
+	 * @param title
+	 * @param content
+	 */
 	public static void sendOneHtml(String qq, String title, String content) {// 给一个人
 																		// html邮件
 		Properties props = new Properties();
@@ -135,6 +141,10 @@ public class EmailUtil {
 		}
 	}
 
+	/**
+	 * 
+	 * @param qq title content  
+	 */
 	public static void sendManyNormal(Map<String,Object> params) {// 群发普通邮件
 		String [] qqs=(String[])params.get("qqs");
 		

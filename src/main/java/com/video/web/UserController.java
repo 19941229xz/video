@@ -2,6 +2,7 @@ package com.video.web;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +130,29 @@ public class UserController {
 			params.put("content", "恭喜您成为私人影院的用户!你的账号为您的QQ:"+params.get("qq")+",密码是"+params.get("pwd"));
 			EmailUtil.sendOneNomal(params);
 		}
+		
+		return rm;
+	}
+	
+	
+	/**
+	 * @visitLevel cold
+	 * @param qq pwd ip device
+	 * @type any
+	 * @coment front validate
+	 */
+	@RequestMapping(value="/forget")
+	@ResponseBody
+	public Map<String,Object> forget(@RequestParam Map<String,Object> params){
+		rm=new HashMap<String,Object>();
+		rm=MapUtil.transToResultMap(rm);
+		
+		List<Map<String,Object>> userList=new ArrayList<Map<String,Object>>();
+		userList=um.one(params);
+		
+		params.put("title", "找回密码");
+		params.put("content", "您账号为"+params.get("qq")+"的密码是"+userList.get(0).get("pwd"));
+		EmailUtil.sendOneNomal(params);
 		
 		return rm;
 	}
