@@ -1,5 +1,6 @@
 package com.video.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +98,16 @@ public class PosterController {
 	public Map<String, Object> delete(@RequestParam Map<String, Object> params) {
 		rm = new HashMap<String, Object>();
 		rm = MapUtil.transToResultMap(rm);
-		rm.put("status", pm.del(params) == 1 ? "0" : "1");
+		
+		File file=new File(pm.one(params).get(0).get("src")+"");
+		
+		if(file.exists()&&file.delete()){
+			rm.put("status", pm.del(params) == 1 ? "0" : "1");
+		}else{
+			rm.put("status", "1");
+		}
+		
+		
 		return rm;
 	}
 	

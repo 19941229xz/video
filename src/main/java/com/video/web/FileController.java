@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.video.dao.PosterMapper;
 import com.video.dao.UserMapper;
 import com.video.service.RedisService;
 import com.video.util.MapUtil;
@@ -32,6 +33,8 @@ public class FileController {
 	
 	@Autowired
 	UserMapper um;
+	@Autowired
+	PosterMapper pm;
 	
 	private Map<String, Object> rm;
 	
@@ -48,6 +51,7 @@ public class FileController {
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
         MultipartFile file = null;
         BufferedOutputStream stream = null;
+        Map<String, Object> params=new HashMap<String,Object>();
         for (int i = 0; i < files.size(); ++i) {
             file = files.get(i);
             if (!file.isEmpty()) {
@@ -56,8 +60,11 @@ public class FileController {
 //                  stream = new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\xz\\Desktop\\"+i+file.getOriginalFilename())));
                     
                     String str=file.getOriginalFilename();
-                    
-                    stream = new BufferedOutputStream(new FileOutputStream(new File(poster_path+StringUtil.createFileName(str))));
+                    String str2=poster_path+StringUtil.createFileName(str);
+                    params.put("src", str2);
+                    //posters  insert
+                    rm.put("status", pm.insert(params) == 1 ? "0" : "1");
+                    stream = new BufferedOutputStream(new FileOutputStream(new File(str2)));
                     stream.write(bytes);
                     stream.close();
                 } catch (Exception e) {
@@ -68,7 +75,6 @@ public class FileController {
             	rm.put("status", "1");
             }
         }
-
 		return rm;
 	}
 	
