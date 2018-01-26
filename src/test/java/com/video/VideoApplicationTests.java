@@ -24,7 +24,9 @@ public class VideoApplicationTests {
 	@Test
 	public void contextLoads() {
 		
-		redisService.set("test", "hahhahahah", 10l);//设置键值对  和有效期  秒
+		redisService.removePattern("userList*");
+		
+		//redisService.set("test", "hahhahahah", 10l);//设置键值对  和有效期  秒
 	}
 	
 	

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wesine.dao.FsyMapper">
+<mapper namespace="com.video.dao.CommmentMapper">
 
-	<update id="updateFsy">
+	<!-- <update id="updateFsy">
 
 		update fsyInfo
 		<trim prefix="set" suffixOverrides=",">
@@ -16,7 +16,70 @@
 		</trim>
 		where userId=#{usrID}
 
-	</update>
+	</update> -->
+	
+	<select id="all" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from comments limit  ${cpage},${pagesize}
+		
+		<!-- somecondition --> <!-- limit -->
+	
+	</select>
+	
+	<select id="one" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from comments where id=#{id}
+		
+		<!-- somecondition --> <!-- limit -->
+	</select>
+	
+	<delete id="del" parameterType="java.util.Map">
+		delete  from comments where id=#{id}  <!-- somecondition 条件删除--> 
+	</delete>
+	
+	<insert id="insert" parameterType="java.util.Map" >
+		insert into comments 
+		
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<!-- name,time, -->
+			<if test="user_id !=null and user_id !=''">
+			user_id,
+			</if>
+			<if test="user_name !=null and user_name !=''">
+			user_name,
+			</if>
+			<if test="content !=null and content !=''">
+			content,
+			</if>
+			<if test="time !=null ">
+			time,
+			</if>
+			<if test="video_id !=null and video_id !=''">
+			video_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<!-- #{name},#{pwd}, -->
+			<if test="user_id !=null and user_id !='' ">
+			#{user_id},
+			</if>
+			<if test="user_name !=null and user_name !='' ">
+			#{user_name},
+			</if>
+			<if test="content !=null and content !='' ">
+			#{content},
+			</if>
+			<if test="time !=null ">
+			#{time},
+			</if>
+			<if test="video_id !=null and video_id !='' ">
+			#{video_id},
+			</if>
+		</trim>
+		
+	</insert>
+	
+	
+	
+	
 
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wesine.dao.CounterMapper">
+<mapper namespace="com.video.dao.TagMapper">
 
-	<insert id="insertUserCounter" parameterType="java.util.List">
+	<!-- <insert id="insertUserCounter" parameterType="java.util.List">
 		<selectKey resultType="String" keyProperty="id"
 			order="AFTER">
 			SELECT LAST_INSERT_ID()
@@ -16,6 +16,47 @@
 			#{item.userID},#{item.counterId}
 			)
 		</foreach>
+	</insert> -->
+	
+	<select id="all" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from tags limit  ${cpage},${pagesize}
+		
+		<!-- somecondition --> <!-- limit -->
+	
+	</select>
+	
+	<select id="one" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from tags where id=#{id}
+		
+		<!-- <trim prefix="and ">
+			<if test="pwd !=null and pwd!='' ">
+				pwd=#{pwd}
+			</if>
+		</trim> -->
+		
+		<!-- somecondition --> <!-- limit -->
+	</select>
+	
+	<delete id="del" parameterType="java.util.Map">
+		delete  from tags where id=#{id}  <!-- somecondition 条件删除--> 
+	</delete>
+	
+	<insert id="insert" parameterType="java.util.Map" >
+		insert into tags 
+		
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<!-- name,time, -->
+			<if test="name !=null and name !=''">
+			name,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<!-- #{name},#{pwd}, -->
+			<if test="name !=null and name !='' ">
+			#{name},
+			</if>
+		</trim>
+		
 	</insert>
 
 

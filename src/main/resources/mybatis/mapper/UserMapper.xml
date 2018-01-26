@@ -7,8 +7,27 @@
 		values(#{usrID},#{usrName},#{companyId},#{roleId})
 	</insert> -->
 	
+	<update id="updateSys">
+	
+		update  sys set 
+		<trim suffixOverrides=",">
+			<if test="video_dir !=null and video_dir !='' ">
+				video_dir=#{video_dir},
+			</if>
+			<if test="server_path !=null and server_path !='' ">
+				server_path=#{server_path},
+			</if>
+			<if test="video_dir !=null and video_dir !='' ">
+				poster_path=#{poster_path},
+			</if>
+		</trim>
+	
+	
+	</update>
+	
 	<select id="all" resultType="java.util.Map" parameterType="java.util.Map">
-		select * from users<!-- somecondition --> <!-- limit -->
+		select * from users limit ${cpage},${pagesize}
+		<!-- somecondition --> <!-- limit -->
 	
 	</select>
 	

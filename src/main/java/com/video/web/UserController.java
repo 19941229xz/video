@@ -43,7 +43,18 @@ public class UserController {
 		rm=new HashMap<String,Object>();
 		rm=MapUtil.transToResultMap(rm);
 		
-		rm.put("userList", um.all(params));
+		//get from cache if exist
+				String key=rs.USERLIST+params.get("cpage")+"-"
+						+params.get("pagesize");
+				if(rs.exists(key)){
+					rm.put(rs.USERLIST, rs.get(key));
+					System.out.println("exist USERLIST from cache");
+				}else{
+					List<Map<String,Object>> userList=um.all(params);
+					rs.set(key, userList);
+					rm.put(rs.USERLIST, userList);
+					System.out.println("not exist USERLIST from database");
+				}
 		
 		return rm;
 	}

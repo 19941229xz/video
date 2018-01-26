@@ -18,7 +18,12 @@ import org.springframework.stereotype.Service;
 public class RedisService {
 	
 	
+	public final String POSTERLIST = "posterList";
+	public final String COMMENTLIST = "commentList";
+	public final String TAGLIST = "tagList";
+	public final String CATLIST = "catList";
 	public final String USERLIST="userList";
+	public final String VIDEOLIST="videoList";
 	
 	
 	

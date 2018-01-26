@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wesine.dao.TransactionMapper">
+<mapper namespace="com.video.dao.PosterMapper">
 
-	<insert id="insert" parameterType="java.util.Map">
-		insert into transactions (ShopID,RegID,CashierID,CustomerID,TsStart,TsEnd,TransID,ScriptVer,Priority,id,CounterID)
-		values(#{ShopID},#{RegID},#{CashierID},#{CustomerID},#{TsStart},#{TsEnd},#{TransID},#{ScriptVer},#{Priority}
-		,#{id},#{CounterID})
+
+
+		<select id="all" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from posters limit  ${cpage},${pagesize}
+		
+		<!-- somecondition --> <!-- limit -->
+	
+	</select>
+	
+	<select id="one" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from posters where id=#{id}
+		
+		<!-- somecondition --> <!-- limit -->
+	</select>
+	
+	<delete id="del" parameterType="java.util.Map">
+		delete  from posters where id=#{id}  <!-- somecondition 条件删除--> 
+	</delete>
+	
+	<insert id="insert" parameterType="java.util.Map" >
+		insert into posters 
+		
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<!-- name,time, -->
+			<if test="src !=null and src !=''">
+			src,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<!-- #{name},#{pwd}, -->
+			<if test="src !=null and src !='' ">
+			#{src},
+			</if>
+		</trim>
+		
 	</insert>
 
+	
+	
+	
 
 </mapper>

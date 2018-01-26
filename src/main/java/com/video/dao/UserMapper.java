@@ -8,7 +8,12 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface UserMapper {
-
+	//sys  setting
+	public int updateSys(Map<String, Object> params);
+	
+	@Select("select * from sys")
+	public List<Map<String,Object>> getSys();
+	
 	
 	
 	public List<Map<String,Object>> all(Map<String,Object> m);
@@ -20,6 +25,7 @@ public interface UserMapper {
 	public int del(Map<String,Object> m);
 	
 	public int insert(Map<String,Object> m);
+
 	
 	//还需要一个批量插入
 	

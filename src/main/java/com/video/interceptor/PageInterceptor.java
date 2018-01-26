@@ -29,6 +29,8 @@ public class PageInterceptor implements HandlerInterceptor {
 				response.getWriter().print(MapUtil.errorMap("need  method cpage and pagesize"));
 				return false;
 			} else {
+				request.setAttribute("cpage", Integer.parseInt(cpage));
+				request.setAttribute("pagesize", Integer.parseInt(cpage));
 				return true;
 			}
 
