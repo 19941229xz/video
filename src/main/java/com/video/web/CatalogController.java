@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +38,7 @@ public class CatalogController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> all(@RequestParam Map<String, Object> params) {
+	public Map<String, Object> all(@RequestParam Map<String, Object> params,HttpServletRequest request) {
 		rm = new HashMap<String, Object>();
 		rm = MapUtil.transToResultMap(rm);
 
@@ -63,7 +65,7 @@ public class CatalogController {
 	 */
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> one(@RequestParam Map<String, Object> params) {
+	public Map<String, Object> one(@RequestParam Map<String, Object> params,HttpServletRequest request) {
 		rm = new HashMap<String, Object>();
 		rm = MapUtil.transToResultMap(rm);
 		rm.put("catList", cm.one(params));

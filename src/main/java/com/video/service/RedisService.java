@@ -27,7 +27,8 @@ public class RedisService {
 	
 	
 	
-    @Autowired
+    
+	@Autowired
     private RedisTemplate redisTemplate;
     /**
      * 写入缓存

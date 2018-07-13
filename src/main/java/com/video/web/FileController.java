@@ -44,7 +44,7 @@ public class FileController {
 		rm = new HashMap<String, Object>();
 		rm = MapUtil.transToResultMap(rm);
 		
-		String poster_path=um.getSys().get(0).get("poster_path")+"";
+		//String poster_path=um.getSys().get(0).get("poster_path")+"";
 		
 //		String realpath=request.getServletContext().getRealPath("/");
 		
@@ -60,7 +60,7 @@ public class FileController {
 //                  stream = new BufferedOutputStream(new FileOutputStream(new File("C:\\Users\\xz\\Desktop\\"+i+file.getOriginalFilename())));
                     
                     String str=file.getOriginalFilename();
-                    String str2=poster_path+StringUtil.createFileName(str);
+                    String str2="E:\\FFOutput"+str;
                     params.put("src", str2);
                     //posters  insert
                     rm.put("status", pm.insert(params) == 1 ? "0" : "1");

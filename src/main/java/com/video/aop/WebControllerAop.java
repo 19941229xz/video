@@ -25,7 +25,7 @@ public class WebControllerAop {
   
     //匹配com.video.web.controller包及其子包下的所有类的所有方法  
     @Pointcut("execution(* com.video.web..*.*(..))")  
-    public void executeService(){  
+    public void executeService(){   
   
     }  
   

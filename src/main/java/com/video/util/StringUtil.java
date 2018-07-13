@@ -12,11 +12,17 @@ public class StringUtil {
 		String[] arr=str.split("\\.");
 		String suffix=arr[arr.length-1];
 		
-		
-		
 		return "poster"+TimeUtil.createNowTimeStr()+"."+suffix;
 		
 	}
+	
+	
+	public static String getPrefixName(String str){
+		String[] arr=str.split("\\.");
+		
+		return arr[0];
+	}
+	
 	
 	
 	
